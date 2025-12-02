@@ -1,3 +1,7 @@
+// Using modulo trick from:
+//  <https://github.com/MizardX/AdventOfCode_2025/blob/main/src/day_02.rs>
+//  <https://github.com/timvisee/advent-of-code-2025/blob/master/day02a/src/main.rs>
+
 fn parse(input: &[u8]) -> impl Iterator<Item = usize> {
     input
         .split(|x| x == &b',')
@@ -11,34 +15,33 @@ fn parse(input: &[u8]) -> impl Iterator<Item = usize> {
 }
 
 fn solve_1(input: &[u8]) -> usize {
-    let mut buffer = itoa::Buffer::new();
     parse(input)
-        .filter(|x| {
-            let x = buffer.format(*x).as_bytes();
-            if x.len() % 2 != 0 {
-                return false;
-            }
-
-            let (a, b) = x.split_at(x.len() / 2);
-            a == b
+        .filter(|x| match x {
+            10..=99 => x % 11 == 0,
+            1_000..=9_999 => x % 101 == 0,
+            100_000..=999_999 => x % 1_001 == 0,
+            10_000_000..=99_999_999 => x % 10_001 == 0,
+            1_000_000_000..=9_999_999_999 => x % 100_001 == 0,
+            _ => false,
         })
         .sum()
 }
 
 fn solve_2(input: &[u8]) -> usize {
-    let mut buffer = itoa::Buffer::new();
     parse(input)
-        .filter(|x| {
-            let x = buffer.format(*x).as_bytes();
-            (1..=x.len() / 2)
-                .map(|idx| {
-                    if x.len() % idx != 0 {
-                        return false;
-                    }
-
-                    x.chunks(idx).all(|chunk| chunk == &x[0..idx])
-                })
-                .any(|x| x)
+        .filter(|x| match x {
+            10..=99 => x % 11 == 0,
+            100..=999 => x % 111 == 0,
+            1_000..=9_999 => x % 101 == 0 || x % 1_111 == 0,
+            10_000..=99_999 => x % 11_111 == 0,
+            100_000..=999_999 => x % 1_001 == 0 || x % 10_101 == 0 || x % 111_111 == 0,
+            1_000_000..=9_999_999 => x % 1_111_111 == 0,
+            10_000_000..=99_999_999 => x % 10_001 == 0 || x % 1_010_101 == 0 || x % 11_111_111 == 0,
+            100_000_000..=999_999_999 => x % 1_001_001 == 0 || x % 111_111_111 == 0,
+            1_000_000_000..=9_999_999_999 => {
+                x % 100_001 == 0 || x % 101_010_101 == 0 || x % 1_111_111_111 == 0
+            }
+            _ => false,
         })
         .sum()
 }
