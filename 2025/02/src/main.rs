@@ -4,17 +4,17 @@ fn parse(input: &[u8]) -> impl Iterator<Item = usize> {
         .map(|x| {
             let mut iter = x
                 .splitn(2, |x| x == &b'-')
-                .map(|x| str::from_utf8(x).unwrap().parse().unwrap());
+                .map(|x| atoi::atoi::<usize>(x).unwrap());
             (iter.next().unwrap(), iter.next().unwrap())
         })
         .flat_map(|(a, b)| a..=b)
 }
 
 fn solve_1(input: &[u8]) -> usize {
+    let mut buffer = itoa::Buffer::new();
     parse(input)
         .filter(|x| {
-            let x = format!("{x}");
-            let x = x.as_bytes();
+            let x = buffer.format(*x).as_bytes();
             if x.len() % 2 != 0 {
                 return false;
             }
@@ -26,10 +26,10 @@ fn solve_1(input: &[u8]) -> usize {
 }
 
 fn solve_2(input: &[u8]) -> usize {
+    let mut buffer = itoa::Buffer::new();
     parse(input)
         .filter(|x| {
-            let x = format!("{x}");
-            let x = x.as_bytes();
+            let x = buffer.format(*x).as_bytes();
             (1..=x.len() / 2)
                 .map(|idx| {
                     if x.len() % idx != 0 {
