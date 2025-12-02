@@ -1,12 +1,14 @@
+fn parse(input: &str) -> impl Iterator<Item = usize> {
+    input.split(',').flat_map(|x| {
+        let (a, b) = x.split_once("-").unwrap();
+        let a: usize = a.parse().unwrap();
+        let b: usize = b.parse().unwrap();
+        a..=b
+    })
+}
+
 fn solve_1(input: &str) -> usize {
-    input
-        .split(',')
-        .flat_map(|x| {
-            let (a, b) = x.split_once("-").unwrap();
-            let a: usize = a.parse().unwrap();
-            let b: usize = b.parse().unwrap();
-            a..=b
-        })
+    parse(input)
         .filter(|x| {
             let x = format!("{x}");
             if x.len() % 2 != 0 {
@@ -20,14 +22,7 @@ fn solve_1(input: &str) -> usize {
 }
 
 fn solve_2(input: &str) -> usize {
-    input
-        .split(',')
-        .flat_map(|x| {
-            let (a, b) = x.split_once("-").unwrap();
-            let a: usize = a.parse().unwrap();
-            let b: usize = b.parse().unwrap();
-            a..=b
-        })
+    parse(input)
         .filter(|x| {
             let x = format!("{x}");
             (1..=x.len() / 2)
