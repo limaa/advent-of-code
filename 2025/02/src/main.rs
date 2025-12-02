@@ -14,6 +14,7 @@ fn solve_1(input: &[u8]) -> usize {
     parse(input)
         .filter(|x| {
             let x = format!("{x}");
+            let x = x.as_bytes();
             if x.len() % 2 != 0 {
                 return false;
             }
@@ -28,13 +29,14 @@ fn solve_2(input: &[u8]) -> usize {
     parse(input)
         .filter(|x| {
             let x = format!("{x}");
+            let x = x.as_bytes();
             (1..=x.len() / 2)
                 .map(|idx| {
                     if x.len() % idx != 0 {
                         return false;
                     }
 
-                    x == x[0..idx].repeat(x.len() / idx)
+                    x.chunks(idx).all(|chunk| chunk == &x[0..idx])
                 })
                 .any(|x| x)
         })
