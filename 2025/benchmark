@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -e
+
+DAYS="01 02"
+
+echo "${DAYS}" \
+	| xargs -n 1 -I{} cargo build --release --manifest-path "{}/Cargo.toml"
+
+BINARIES=$(echo "${DAYS}" | sed -E 's/([0-9]+)/\1\/target\/release\/day-\1/g')
+
+hyperfine \
+	--runs 100 \
+	--warmup 5 \
+	--shell none \
+	--export-markdown benchmark.md \
+	${BINARIES}
