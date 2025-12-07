@@ -10,7 +10,6 @@ echo "${DAYS}" \
 BINARIES=$(echo "${DAYS}" | sed -E 's/([0-9]+)/\1\/target\/release\/day-\1/g')
 
 hyperfine \
-	--runs 100 \
 	--warmup 5 \
 	--shell none \
 	--export-markdown benchmark.md \

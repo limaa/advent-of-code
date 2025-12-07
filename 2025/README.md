@@ -8,8 +8,8 @@ All solutions are measured using [hyperfine](hyperfine) on a `i7-4870HQ @ 2.5GHz
 
 | Command                    |  Mean [ms] | Min [ms] | Max [ms] |    Relative |
 | :------------------------- | ---------: | -------: | -------: | ----------: |
-| `01/target/release/day-01` |  2.6 ± 0.4 |      2.3 |      4.2 |        1.00 |
-| `02/target/release/day-02` | 15.2 ± 0.5 |     14.2 |     17.2 | 5.75 ± 0.80 |
+| `01/target/release/day-01` |  2.7 ± 1.9 |      2.3 |     46.1 |        1.00 |
+| `02/target/release/day-02` | 16.1 ± 2.4 |     15.0 |     39.4 | 5.96 ± 4.29 |
 
 [rust]: https://www.rust-lang.org/
 [aoc]: https://adventofcode.com/2025
