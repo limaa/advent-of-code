@@ -2,7 +2,7 @@
 
 set -e
 
-DAYS="01 02 04 07"
+DAYS="01 02 04 05 07"
 
 echo "${DAYS}" \
 	| xargs -n 1 -I{} cargo build --release --manifest-path "{}/Cargo.toml"
